@@ -267,8 +267,8 @@ pub use mlua_derive::FromLua;
 /// }
 /// ```
 ///
-#[cfg(any(feature = "module", docsrs))]
-#[cfg_attr(docsrs, doc(cfg(feature = "module")))]
+#[cfg(feature = "macros")]
+#[cfg_attr(docsrs, doc(cfg(feature = "macros")))]
 pub use mlua_derive::lua_module;
 
 pub(crate) mod private {
