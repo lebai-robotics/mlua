@@ -58,7 +58,7 @@ pub fn lua_module(attr: TokenStream, item: TokenStream) -> TokenStream {
     };
 
     let wrapped = quote! {
-        mlua::require_module_feature!();
+        // mlua::require_module_feature!();
 
         #func
 
