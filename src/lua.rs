@@ -94,7 +94,6 @@ pub(crate) struct ExtraData {
 
     safe: bool,
     libs: StdLib,
-    #[cfg(feature = "module")]
     skip_memory_check: bool,
 
     // Auxiliary thread to store references
@@ -517,7 +516,6 @@ impl Lua {
             app_data: AppData::default(),
             safe: false,
             libs: StdLib::NONE,
-            #[cfg(feature = "module")]
             skip_memory_check: false,
             ref_thread,
             // We need some reserved stack space to move values in and out of the ref stack.
@@ -742,7 +740,6 @@ impl Lua {
 
     /// Skips memory checks for some operations.
     #[doc(hidden)]
-    #[cfg(feature = "module")]
     pub fn skip_memory_check(&self, skip: bool) {
         unsafe { (*self.extra.get()).skip_memory_check = skip };
     }
@@ -3236,10 +3233,7 @@ impl Lua {
         // MemoryInfo is empty in module mode so we cannot predict memory limits
         match MemoryState::get(self.main_state) {
             mem_state if !mem_state.is_null() => (*mem_state).memory_limit() == 0,
-            #[cfg(feature = "module")]
             _ => (*self.extra.get()).skip_memory_check, // Check the special flag (only for module mode)
-            #[cfg(not(feature = "module"))]
-            _ => false,
         }
     }
 
